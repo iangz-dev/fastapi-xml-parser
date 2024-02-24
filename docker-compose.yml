@@ -3,23 +3,16 @@ version: '3'
 services:
   app:
     build: .
-    container_name: QA-fastapi-prices
+    container_name: XMLfastAPI
     ports:
-      - "8081:80"    
+      - "8080:80"    
     volumes: 
-      - type: volume
-        source: network-directory
+      - type: bind
+        source: ./app
+        target: /app
+      - type: bind
+        source: ${CIFS_PATH_PRICING}
         target: /productpricing
-        volume:
-          nocopy: true
     env_file:
       - .env
     command: uvicorn main:app --host 0.0.0.0 --port 80 --workers 1 --reload
-
-volumes:
-  network-directory:
-    driver: local
-    driver_opts:
-      type: cifs
-      o: "username=${CIFS_USERNAME},password=${CIFS_PASSWORD},iocharset=utf8,file_mode=0777,dir_mode=0777"
-      device: "${CIFS_PATH_PRICING}"

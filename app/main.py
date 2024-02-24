@@ -26,13 +26,13 @@ class PriceModRequest(BaseModel):
 # Here comes the app
 app = FastAPI()
 load_dotenv()
-ruta_volumen=os.getenv("CIFS_PATH_PRICING_PJSSYNC")
+ruta_volumen=os.getenv("CIFS_PATH_PRICING")
 pricing_directory = "/productpricing"
 
 # Health
 @app.get("/", tags=["Salud"])
 async def root():
-    return {"status": f"Servicio disponible.", "entorno": "QAVM","volumen":f"{ruta_volumen}", "version:":_version}
+    return {"status": f"service available.", "environment": "localhost","volume":f"{ruta_volumen}", "version:":_version}
 
 # Getting the newest XML file
 @app.get("/get-latest-xmlfile", tags=["Newest XML file"])
